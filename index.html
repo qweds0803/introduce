@@ -1,0 +1,641 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>반려견 두부 소개 페이지 목차 (INDEX) 🐩</title>
+    <style>
+        /* 3-js.html과 동일한 베이지(Beige) & 초록색(Green) 계열의 따뜻하고 포근한 팔레트 */
+        :root {
+            --beige-bg: #F7F2E7;
+            --beige-card: #FFFDF8;
+            --beige-soft: #EFE6D5;
+            --beige-border: #DFD3BC;
+            --green-dark: #2C4C38;
+            --green-main: #436E52;
+            --green-medium: #689477;
+            --green-light: #D9E6DC;
+            --green-pale: #EAF2EC;
+            --shadow-color: rgba(44, 76, 56, 0.12);
+        }
+
+        /* 다크모드 (3-js.html과 동일하며 localStorage로 연동됨) */
+        body.dark-mode {
+            --beige-bg: #1B2E23;
+            --beige-card: #243B2E;
+            --beige-soft: #2E4A3A;
+            --beige-border: #3E614D;
+            --green-dark: #F5EFE2;
+            --green-main: #88B397;
+            --green-medium: #689477;
+            --green-light: #355442;
+            --green-pale: #2A4435;
+            --shadow-color: rgba(15, 28, 20, 0.45);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            background-color: var(--beige-bg);
+            color: var(--green-dark);
+            font-family: 'Apple SD Gothic Neo', 'Malgun Gothic', '맑은 고딕', sans-serif;
+            line-height: 1.7;
+            padding: 24px 16px 40px;
+            max-width: 600px;
+            margin: 0 auto;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        /* 상단 유틸리티 바 (다크모드 + 40dB 멍멍 소리) */
+        .top-bar {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 16px;
+            background-color: var(--beige-card);
+            border: 2px solid var(--beige-border);
+            padding: 12px 16px;
+            border-radius: 22px;
+            box-shadow: 0 4px 12px var(--shadow-color);
+        }
+
+        .index-badge {
+            font-size: 0.9rem;
+            font-weight: 700;
+            color: var(--green-dark);
+            background-color: var(--green-pale);
+            padding: 6px 14px;
+            border-radius: 16px;
+            border: 1px solid var(--green-medium);
+        }
+
+        .top-actions {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+
+        /* 공통 버튼 스타일 */
+        .btn {
+            background-color: var(--green-main);
+            color: #FFFDF8;
+            border: 2px solid var(--green-medium);
+            padding: 8px 14px;
+            border-radius: 16px;
+            font-size: 0.9rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: transform 0.15s ease, background-color 0.2s ease;
+            font-family: inherit;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+        }
+
+        body.dark-mode .btn {
+            color: #1B2E23;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            background-color: var(--green-medium);
+        }
+
+        .btn:active {
+            transform: translateY(0);
+        }
+
+        .btn-soft {
+            background-color: var(--beige-soft);
+            color: var(--green-dark);
+            border: 2px solid var(--beige-border);
+        }
+
+        body.dark-mode .btn-soft {
+            color: var(--green-dark);
+        }
+
+        .btn-soft:hover {
+            background-color: var(--green-light);
+        }
+
+        /* 상단 헤더 둥근 카드 */
+        header {
+            background-color: var(--green-main);
+            color: #FFFDF8;
+            padding: 32px 24px;
+            border-radius: 28px;
+            text-align: center;
+            box-shadow: 0 8px 20px var(--shadow-color);
+            margin-bottom: 24px;
+            border: 3px solid var(--beige-soft);
+        }
+
+        body.dark-mode header {
+            background-color: #2E4A3A;
+            border-color: var(--green-medium);
+        }
+
+        header::before {
+            content: "🐩 🐾 🐶 🐾 🐩";
+            display: block;
+            font-size: 1.5rem;
+            margin-bottom: 12px;
+            letter-spacing: 4px;
+        }
+
+        header h1 {
+            font-size: 1.55rem;
+            line-height: 1.4;
+            margin-bottom: 12px;
+            word-break: keep-all;
+        }
+
+        header p {
+            background-color: #2C4C38;
+            color: #EFE6D5;
+            display: inline-block;
+            padding: 8px 18px;
+            border-radius: 20px;
+            font-size: 0.95rem;
+            word-break: keep-all;
+        }
+
+        header::after {
+            content: "🦴 🐩 🦴";
+            display: block;
+            font-size: 1.2rem;
+            margin-top: 14px;
+        }
+
+        /* 강아지 발바닥 구분선 */
+        hr {
+            border: none;
+            text-align: center;
+            margin: 20px 0;
+        }
+
+        hr::after {
+            content: "🐾 🐩 🐾 🐶 🐾";
+            font-size: 1.1rem;
+            color: var(--green-medium);
+            letter-spacing: 6px;
+        }
+
+        /* 섹션 카드 */
+        section {
+            background-color: var(--beige-card);
+            border: 2px solid var(--beige-border);
+            border-radius: 26px;
+            padding: 26px 22px;
+            box-shadow: 0 6px 16px var(--shadow-color);
+            margin-bottom: 8px;
+            transition: background-color 0.3s ease, border-color 0.3s ease;
+        }
+
+        section h2 {
+            color: var(--green-dark);
+            background-color: var(--green-light);
+            display: inline-block;
+            padding: 8px 20px;
+            border-radius: 20px;
+            font-size: 1.2rem;
+            margin-bottom: 18px;
+            border: 2px solid var(--green-medium);
+        }
+
+        section h2::before {
+            content: "🐩 ";
+        }
+
+        section h2::after {
+            content: " 🐾";
+        }
+
+        /* 미니 프로필 영역 */
+        .profile-preview {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            background-color: var(--beige-soft);
+            border: 3px dashed var(--green-medium);
+            border-radius: 22px;
+            padding: 16px;
+            margin-bottom: 18px;
+        }
+
+        .profile-preview img {
+            width: 88px;
+            height: 88px;
+            object-fit: cover;
+            border-radius: 50%;
+            border: 3px solid var(--beige-card);
+            background-color: var(--green-pale);
+            flex-shrink: 0;
+        }
+
+        .profile-text {
+            word-break: keep-all;
+        }
+
+        .profile-text strong {
+            display: inline-block;
+            color: var(--green-main);
+            background-color: var(--green-light);
+            padding: 2px 10px;
+            border-radius: 10px;
+            font-size: 1rem;
+            margin-bottom: 6px;
+        }
+
+        .profile-text p {
+            font-size: 0.92rem;
+            color: var(--green-dark);
+        }
+
+        /* 목차 카드 리스트 */
+        .toc-list {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+
+        .toc-card {
+            background-color: var(--green-pale);
+            border: 2px solid var(--green-light);
+            border-radius: 22px;
+            padding: 20px;
+            transition: transform 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .toc-card:hover {
+            transform: translateY(-3px);
+            border-color: var(--green-main);
+            box-shadow: 0 6px 16px var(--shadow-color);
+        }
+
+        .toc-card-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .step-badge {
+            background-color: var(--green-main);
+            color: #FFFDF8;
+            padding: 4px 12px;
+            border-radius: 14px;
+            font-size: 0.85rem;
+            font-weight: 700;
+        }
+
+        body.dark-mode .step-badge {
+            color: #1B2E23;
+        }
+
+        .file-badge {
+            background-color: var(--beige-card);
+            color: var(--green-main);
+            border: 1px solid var(--beige-border);
+            padding: 3px 10px;
+            border-radius: 12px;
+            font-size: 0.82rem;
+            font-weight: 700;
+            font-family: monospace;
+        }
+
+        .toc-title {
+            font-size: 1.15rem;
+            font-weight: 800;
+            color: var(--green-dark);
+            word-break: keep-all;
+        }
+
+        .toc-desc {
+            font-size: 0.93rem;
+            color: var(--green-dark);
+            background-color: var(--beige-card);
+            padding: 12px 14px;
+            border-radius: 16px;
+            border: 1px solid var(--beige-border);
+            word-break: keep-all;
+        }
+
+        .toc-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+        }
+
+        .toc-tag {
+            background-color: var(--beige-soft);
+            color: var(--green-dark);
+            border: 1px solid var(--beige-border);
+            padding: 3px 10px;
+            border-radius: 12px;
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+
+        /* 페이지 이동 큰 버튼 */
+        .toc-link-btn {
+            width: 100%;
+            background-color: var(--green-main);
+            color: #FFFDF8;
+            border: 2px solid var(--green-medium);
+            padding: 14px 18px;
+            border-radius: 18px;
+            font-size: 1rem;
+            font-weight: 700;
+            text-decoration: none;
+            text-align: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            transition: background-color 0.2s ease, transform 0.15s ease;
+            box-shadow: 0 4px 10px var(--shadow-color);
+        }
+
+        body.dark-mode .toc-link-btn {
+            color: #1B2E23;
+        }
+
+        .toc-link-btn:hover {
+            background-color: var(--green-medium);
+            transform: translateY(-2px);
+        }
+
+        .toc-link-btn:active {
+            transform: translateY(0);
+        }
+
+        /* 하단 푸터 둥근 카드 */
+        footer {
+            background-color: var(--beige-soft);
+            border: 2px solid var(--green-medium);
+            border-radius: 26px;
+            padding: 24px 20px;
+            text-align: center;
+            color: var(--green-dark);
+            font-weight: 600;
+            word-break: keep-all;
+            box-shadow: 0 6px 16px var(--shadow-color);
+        }
+
+        footer::before {
+            content: "🐩 🐶 🐾 🐩 🐶";
+            display: block;
+            font-size: 1.3rem;
+            margin-bottom: 8px;
+        }
+
+        footer::after {
+            content: "🐾 원하는 단계의 버튼을 눌러 두부를 만나보세요! 🐩";
+            display: block;
+            margin-top: 10px;
+            font-size: 0.9rem;
+            color: var(--green-main);
+        }
+
+        /* 스마트폰 등 작은 화면 최적화 */
+        @media (max-width: 480px) {
+            body {
+                padding: 16px 12px 32px;
+            }
+
+            .top-bar {
+                flex-direction: column;
+                align-items: stretch;
+                text-align: center;
+            }
+
+            .top-actions {
+                justify-content: center;
+            }
+
+            header {
+                padding: 24px 16px;
+                border-radius: 24px;
+            }
+
+            header h1 {
+                font-size: 1.3rem;
+            }
+
+            section {
+                padding: 20px 16px;
+                border-radius: 22px;
+            }
+
+            section h2 {
+                font-size: 1.1rem;
+            }
+
+            .profile-preview {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            .toc-card {
+                padding: 16px;
+            }
+
+            .toc-title {
+                font-size: 1.05rem;
+            }
+
+            .toc-link-btn {
+                padding: 13px 14px;
+                font-size: 0.95rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- 상단 유틸리티 바: 안내 배지 + 40dB 멍멍 소리 + 다크모드 전환 -->
+    <div class="top-bar">
+        <div class="index-badge">🐾 두부 소개 프로젝트 · 전체 목차</div>
+        <div class="top-actions">
+            <button type="button" class="btn btn-soft" id="barkTopBtn">🔊 40dB 멍멍!</button>
+            <button type="button" class="btn" id="darkModeBtn">🌙 다크모드 전환</button>
+        </div>
+    </div>
+
+    <header>
+        <h1>나의 소중한 반려견 '두부' 소개 페이지 목차</h1>
+        <p>HTML · CSS · JS 단계별 페이지로 이동해 보세요!</p>
+    </header>
+
+    <hr>
+
+    <main>
+        <section>
+            <h2>목차 (페이지 바로가기)</h2>
+
+            <!-- 귀여운 두부 미니 프로필 -->
+            <div class="profile-preview">
+                <img src="dubu.jpg" alt="귀여운 반려견 두부의 사진">
+                <div class="profile-text">
+                    <strong>🐶 하얀 미니어처 푸들 두부 🐩</strong>
+                    <p>산책과 날아다니는 새 구경, 건조 닭 간식과 양털 담요를 좋아하는 귀염둥이 두부의 성장기 웹페이지예요!</p>
+                </div>
+            </div>
+
+            <!-- 3개의 HTML 파일로 이동하는 목차 카드 리스트 -->
+            <div class="toc-list">
+                <!-- 1. 1-html.html -->
+                <article class="toc-card">
+                    <div class="toc-card-header">
+                        <span class="step-badge">STEP 1 · HTML 기본편</span>
+                        <span class="file-badge">1-html.html</span>
+                    </div>
+                    <div class="toc-title">🌱 뼈대로 만나는 두부 소개 페이지</div>
+                    <p class="toc-desc">
+                        순수 HTML 태그(<code>header</code>, <code>section</code>, <code>figure</code>, <code>ol</code>)만을 사용해 두부의 사진과 기본 소개, 좋아하는 것 BEST 5를 깔끔하게 정리한 첫 단계 페이지입니다.
+                    </p>
+                    <div class="toc-tags">
+                        <span class="toc-tag">#HTML5</span>
+                        <span class="toc-tag">#시맨틱태그</span>
+                        <span class="toc-tag">#기본구조</span>
+                    </div>
+                    <a href="1-html.html" class="toc-link-btn">
+                        <span>🐩 1단계 · HTML 페이지 보러가기</span>
+                        <span>➔</span>
+                    </a>
+                </article>
+
+                <!-- 2. 2-css.html -->
+                <article class="toc-card">
+                    <div class="toc-card-header">
+                        <span class="step-badge">STEP 2 · CSS 스타일편</span>
+                        <span class="file-badge">2-css.html</span>
+                    </div>
+                    <div class="toc-title">🎨 포근한 옷을 입은 두부 소개 페이지</div>
+                    <p class="toc-desc">
+                        따뜻한 베이지와 숲속 초록색 컬러 팔레트, 둥근 카드 레이아웃, 강아지 발바닥 구분선과 모바일 반응형 디자인을 적용해 예쁘게 꾸민 두 번째 페이지입니다.
+                    </p>
+                    <div class="toc-tags">
+                        <span class="toc-tag">#CSS3</span>
+                        <span class="toc-tag">#베이지&amp;초록테마</span>
+                        <span class="toc-tag">#모바일반응형</span>
+                    </div>
+                    <a href="2-css.html" class="toc-link-btn">
+                        <span>🐾 2단계 · CSS 페이지 보러가기</span>
+                        <span>➔</span>
+                    </a>
+                </article>
+
+                <!-- 3. 3-js.html -->
+                <article class="toc-card">
+                    <div class="toc-card-header">
+                        <span class="step-badge">STEP 3 · JS 인터랙티브편</span>
+                        <span class="file-badge">3-js.html</span>
+                    </div>
+                    <div class="toc-title">✨ 살아 숨 쉬는 두부와의 소통 공간</div>
+                    <p class="toc-desc">
+                        다크모드 전환, 40dB 조용한 멍멍 소리, 방문 조회수, 두부의 생활공간(일기장·방명록·친구요청), 리액션·응원 게이지, 1:1 디엠(DM) 채팅까지 모두 담긴 완성형 페이지입니다.
+                    </p>
+                    <div class="toc-tags">
+                        <span class="toc-tag">#JavaScript</span>
+                        <span class="toc-tag">#다크모드</span>
+                        <span class="toc-tag">#1:1디엠&amp;방명록</span>
+                    </div>
+                    <a href="3-js.html" class="toc-link-btn">
+                        <span>🦴 3단계 · JS 완성 페이지 보러가기</span>
+                        <span>➔</span>
+                    </a>
+                </article>
+            </div>
+        </section>
+    </main>
+
+    <hr>
+
+    <footer>
+        <p>우리 귀염둥이 두부 소개 페이지에 놀러 와줘서 고마워!</p>
+    </footer>
+
+    <script>
+        /* ==========================================
+           1. 40dB 강아지(미니어처 푸들) 짖는 소리 합성기 (3-js.html 동일 사운드)
+           ========================================== */
+        let audioCtx = null;
+
+        function playGentlePoodleBark40dB() {
+            if (!audioCtx) {
+                const AudioContextClass = window.AudioContext || window.webkitAudioContext;
+                audioCtx = new AudioContextClass();
+            }
+            if (audioCtx.state === 'suspended') {
+                audioCtx.resume();
+            }
+
+            const now = audioCtx.currentTime;
+
+            [0, 0.24].forEach((offset, idx) => {
+                const start = now + offset;
+                const duration = 0.14;
+
+                const osc = audioCtx.createOscillator();
+                const filter = audioCtx.createBiquadFilter();
+                const gainNode = audioCtx.createGain();
+
+                osc.type = 'triangle';
+                const baseFreq = idx === 0 ? 520 : 580;
+                osc.frequency.setValueAtTime(baseFreq, start);
+                osc.frequency.exponentialRampToValueAtTime(baseFreq * 1.45, start + 0.04);
+                osc.frequency.exponentialRampToValueAtTime(baseFreq * 0.72, start + duration);
+
+                filter.type = 'bandpass';
+                filter.frequency.setValueAtTime(900, start);
+                filter.Q.setValueAtTime(2.5, start);
+
+                gainNode.gain.setValueAtTime(0.001, start);
+                gainNode.gain.linearRampToValueAtTime(0.08, start + 0.02);
+                gainNode.gain.exponentialRampToValueAtTime(0.001, start + duration);
+
+                osc.connect(filter);
+                filter.connect(gainNode);
+                gainNode.connect(audioCtx.destination);
+
+                osc.start(start);
+                osc.stop(start + duration);
+            });
+        }
+
+        document.getElementById('barkTopBtn').addEventListener('click', playGentlePoodleBark40dB);
+
+        /* ==========================================
+           2. 다크모드 전환 기능 (3-js.html과 동일한 localStorage 키 공유)
+           ========================================== */
+        const darkModeBtn = document.getElementById('darkModeBtn');
+        const savedTheme = localStorage.getItem('dubu_dark_mode');
+
+        if (savedTheme === 'dark') {
+            document.body.classList.add('dark-mode');
+            darkModeBtn.textContent = '☀️ 라이트모드 전환';
+        }
+
+        darkModeBtn.addEventListener('click', () => {
+            document.body.classList.toggle('dark-mode');
+            const isDark = document.body.classList.contains('dark-mode');
+            darkModeBtn.textContent = isDark ? '☀️ 라이트모드 전환' : '🌙 다크모드 전환';
+            localStorage.setItem('dubu_dark_mode', isDark ? 'dark' : 'light');
+        });
+    </script>
+</body>
+</html>

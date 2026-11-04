@@ -1,0 +1,1346 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>나의 반려견 두부를 소개합니다! 🐩</title>
+    <style>
+        /* 오직 베이지(Beige)와 초록색(Green) 계열만 사용한 따뜻하고 포근한 팔레트 */
+        :root {
+            --beige-bg: #F7F2E7;
+            --beige-card: #FFFDF8;
+            --beige-soft: #EFE6D5;
+            --beige-border: #DFD3BC;
+            --green-dark: #2C4C38;
+            --green-main: #436E52;
+            --green-medium: #689477;
+            --green-light: #D9E6DC;
+            --green-pale: #EAF2EC;
+            --shadow-color: rgba(44, 76, 56, 0.12);
+        }
+
+        /* 다크모드 (초록 & 베이지 톤 유지하면서 어둡고 포근한 숲속 밤 테마) */
+        body.dark-mode {
+            --beige-bg: #1B2E23;
+            --beige-card: #243B2E;
+            --beige-soft: #2E4A3A;
+            --beige-border: #3E614D;
+            --green-dark: #F5EFE2;
+            --green-main: #88B397;
+            --green-medium: #689477;
+            --green-light: #355442;
+            --green-pale: #2A4435;
+            --shadow-color: rgba(15, 28, 20, 0.45);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            background-color: var(--beige-bg);
+            color: var(--green-dark);
+            font-family: 'Apple SD Gothic Neo', 'Malgun Gothic', '맑은 고딕', sans-serif;
+            line-height: 1.7;
+            padding: 24px 16px 40px;
+            max-width: 600px;
+            margin: 0 auto;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        /* 상단 유틸리티 바 (조회수 + 다크모드 + 40dB 멍멍 소리) */
+        .top-bar {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 16px;
+            background-color: var(--beige-card);
+            border: 2px solid var(--beige-border);
+            padding: 12px 16px;
+            border-radius: 22px;
+            box-shadow: 0 4px 12px var(--shadow-color);
+        }
+
+        .view-badge {
+            font-size: 0.9rem;
+            font-weight: 700;
+            color: var(--green-dark);
+            background-color: var(--green-pale);
+            padding: 6px 14px;
+            border-radius: 16px;
+            border: 1px solid var(--green-medium);
+        }
+
+        .top-actions {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+
+        /* 공통 버튼 스타일 */
+        .btn {
+            background-color: var(--green-main);
+            color: #FFFDF8;
+            border: 2px solid var(--green-medium);
+            padding: 8px 14px;
+            border-radius: 16px;
+            font-size: 0.9rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: transform 0.15s ease, background-color 0.2s ease;
+            font-family: inherit;
+        }
+
+        body.dark-mode .btn {
+            color: #1B2E23;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            background-color: var(--green-medium);
+        }
+
+        .btn:active {
+            transform: translateY(0);
+        }
+
+        .btn-soft {
+            background-color: var(--beige-soft);
+            color: var(--green-dark);
+            border: 2px solid var(--beige-border);
+        }
+
+        body.dark-mode .btn-soft {
+            color: var(--green-dark);
+        }
+
+        .btn-soft:hover {
+            background-color: var(--green-light);
+        }
+
+        /* 상단 헤더 둥근 카드 (2-css.html 동일 디자인) */
+        header {
+            background-color: var(--green-main);
+            color: #FFFDF8;
+            padding: 32px 24px;
+            border-radius: 28px;
+            text-align: center;
+            box-shadow: 0 8px 20px var(--shadow-color);
+            margin-bottom: 24px;
+            border: 3px solid var(--beige-soft);
+        }
+
+        body.dark-mode header {
+            background-color: #2E4A3A;
+            border-color: var(--green-medium);
+        }
+
+        header::before {
+            content: "🐩 🐾 🐶 🐾 🐩";
+            display: block;
+            font-size: 1.5rem;
+            margin-bottom: 12px;
+            letter-spacing: 4px;
+        }
+
+        header h1 {
+            font-size: 1.55rem;
+            line-height: 1.4;
+            margin-bottom: 12px;
+            word-break: keep-all;
+        }
+
+        header p {
+            background-color: #2C4C38;
+            color: #EFE6D5;
+            display: inline-block;
+            padding: 8px 18px;
+            border-radius: 20px;
+            font-size: 0.95rem;
+            word-break: keep-all;
+        }
+
+        header::after {
+            content: "🦴 🐩 🦴";
+            display: block;
+            font-size: 1.2rem;
+            margin-top: 14px;
+        }
+
+        /* 기존 hr을 귀여운 강아지 발바닥 구분선으로 꾸미기 */
+        hr {
+            border: none;
+            text-align: center;
+            margin: 20px 0;
+        }
+
+        hr::after {
+            content: "🐾 🐩 🐾 🐶 🐾";
+            font-size: 1.1rem;
+            color: var(--green-medium);
+            letter-spacing: 6px;
+        }
+
+        /* 각 섹션을 포근한 둥근 카드 형태로 제작 */
+        section {
+            background-color: var(--beige-card);
+            border: 2px solid var(--beige-border);
+            border-radius: 26px;
+            padding: 26px 22px;
+            box-shadow: 0 6px 16px var(--shadow-color);
+            margin-bottom: 8px;
+            transition: background-color 0.3s ease, border-color 0.3s ease;
+        }
+
+        section h2 {
+            color: var(--green-dark);
+            background-color: var(--green-light);
+            display: inline-block;
+            padding: 8px 20px;
+            border-radius: 20px;
+            font-size: 1.2rem;
+            margin-bottom: 18px;
+            border: 2px solid var(--green-medium);
+        }
+
+        section h2::before {
+            content: "🐩 ";
+        }
+
+        section h2::after {
+            content: " 🐾";
+        }
+
+        /* 사진 카드 영역 */
+        figure {
+            background-color: var(--beige-soft);
+            border: 3px dashed var(--green-medium);
+            border-radius: 22px;
+            padding: 20px 16px;
+            text-align: center;
+        }
+
+        figure::before {
+            content: "🐶 하얀 미니어처 푸들 두부 🐩";
+            display: block;
+            font-weight: bold;
+            color: var(--green-main);
+            margin-bottom: 12px;
+            font-size: 0.95rem;
+        }
+
+        img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 18px;
+            border: 4px solid var(--beige-card);
+            background-color: var(--green-pale);
+            color: var(--green-dark);
+            display: block;
+            margin: 0 auto 12px;
+        }
+
+        figcaption {
+            background-color: var(--beige-card);
+            color: var(--green-main);
+            padding: 10px 14px;
+            border-radius: 14px;
+            font-size: 0.9rem;
+            word-break: keep-all;
+            border: 1px solid var(--beige-border);
+        }
+
+        /* 40dB 강아지 짖는 소리 박스 */
+        .bark-box {
+            margin-top: 14px;
+            background-color: var(--green-pale);
+            border: 2px solid var(--green-medium);
+            border-radius: 18px;
+            padding: 14px;
+            text-align: center;
+        }
+
+        .bark-status {
+            font-size: 0.85rem;
+            color: var(--green-main);
+            margin-top: 8px;
+            font-weight: 600;
+        }
+
+        /* 기본 소개 영역 */
+        section p {
+            background-color: var(--beige-bg);
+            padding: 14px 18px;
+            border-radius: 18px;
+            margin-bottom: 12px;
+            border: 1px solid var(--beige-border);
+            word-break: keep-all;
+        }
+
+        section p:last-child {
+            margin-bottom: 0;
+        }
+
+        section p::before {
+            content: "🐩 ";
+        }
+
+        strong {
+            color: var(--green-main);
+            background-color: var(--green-light);
+            padding: 2px 8px;
+            border-radius: 8px;
+        }
+
+        /* 두부가 좋아하는 것 BEST 5 리스트 */
+        ol {
+            list-style: none;
+            counter-reset: fav-counter;
+        }
+
+        ol li {
+            counter-increment: fav-counter;
+            background-color: var(--green-pale);
+            border: 2px solid var(--green-light);
+            border-radius: 18px;
+            padding: 14px 16px;
+            margin-bottom: 10px;
+            font-weight: 600;
+            color: var(--green-dark);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        ol li:last-child {
+            margin-bottom: 0;
+        }
+
+        ol li::before {
+            content: "🐩 " counter(fav-counter) ". ";
+            background-color: var(--green-main);
+            color: #FFFDF8;
+            padding: 4px 12px;
+            border-radius: 14px;
+            margin-right: 12px;
+            font-size: 0.9rem;
+            flex-shrink: 0;
+        }
+
+        body.dark-mode ol li::before {
+            color: #1B2E23;
+        }
+
+        ol li::after {
+            content: "🐶🐾";
+            margin-left: auto;
+            padding-left: 8px;
+        }
+
+        /* 입력 폼 공통 스타일 */
+        .input-field, .textarea-field, .select-field {
+            width: 100%;
+            background-color: var(--beige-bg);
+            color: var(--green-dark);
+            border: 2px solid var(--beige-border);
+            border-radius: 14px;
+            padding: 10px 14px;
+            font-size: 0.95rem;
+            font-family: inherit;
+            margin-bottom: 10px;
+            outline: none;
+        }
+
+        .input-field:focus, .textarea-field:focus, .select-field:focus {
+            border-color: var(--green-main);
+        }
+
+        .form-row {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 10px;
+        }
+
+        /* 반응 기능 버튼 그리드 */
+        .reaction-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+            gap: 10px;
+        }
+
+        .reaction-btn {
+            background-color: var(--green-pale);
+            color: var(--green-dark);
+            border: 2px solid var(--green-medium);
+            border-radius: 18px;
+            padding: 12px 10px;
+            font-size: 0.95rem;
+            font-weight: 700;
+            cursor: pointer;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 4px;
+            transition: transform 0.15s ease, background-color 0.2s ease;
+            font-family: inherit;
+        }
+
+        .reaction-btn:hover {
+            transform: scale(1.03);
+            background-color: var(--green-light);
+        }
+
+        .reaction-count {
+            background-color: var(--green-main);
+            color: #FFFDF8;
+            padding: 2px 10px;
+            border-radius: 12px;
+            font-size: 0.85rem;
+        }
+
+        body.dark-mode .reaction-count {
+            color: #1B2E23;
+        }
+
+        /* 응원 기능 게이지 */
+        .cheer-meter {
+            background-color: var(--beige-soft);
+            border: 2px solid var(--beige-border);
+            border-radius: 16px;
+            height: 26px;
+            overflow: hidden;
+            margin: 12px 0;
+        }
+
+        .cheer-fill {
+            background-color: var(--green-main);
+            height: 100%;
+            width: 0%;
+            transition: width 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+            padding-right: 8px;
+            color: #FFFDF8;
+            font-size: 0.8rem;
+            font-weight: bold;
+        }
+
+        /* 친구 목록 태그 */
+        .friend-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-top: 12px;
+        }
+
+        .friend-tag {
+            background-color: var(--green-pale);
+            border: 1px solid var(--green-medium);
+            color: var(--green-dark);
+            padding: 6px 12px;
+            border-radius: 16px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        /* DM 채팅창 */
+        .dm-window {
+            background-color: var(--beige-soft);
+            border: 2px solid var(--beige-border);
+            border-radius: 18px;
+            padding: 14px;
+            height: 250px;
+            overflow-y: auto;
+            margin-bottom: 12px;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .dm-bubble {
+            max-width: 82%;
+            padding: 10px 14px;
+            border-radius: 16px;
+            font-size: 0.92rem;
+            line-height: 1.5;
+            word-break: keep-all;
+        }
+
+        .dm-dubu {
+            align-self: flex-start;
+            background-color: var(--beige-card);
+            border: 2px solid var(--green-medium);
+            color: var(--green-dark);
+        }
+
+        .dm-me {
+            align-self: flex-end;
+            background-color: var(--green-main);
+            color: #FFFDF8;
+        }
+
+        body.dark-mode .dm-me {
+            color: #1B2E23;
+        }
+
+        /* 일기장 & 방명록 카드 아이템 */
+        .item-list {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            margin-top: 14px;
+        }
+
+        .item-card {
+            background-color: var(--green-pale);
+            border: 2px solid var(--green-light);
+            border-radius: 18px;
+            padding: 14px 16px;
+        }
+
+        .item-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 6px;
+            font-size: 0.88rem;
+            color: var(--green-main);
+            font-weight: 700;
+        }
+
+        .item-body {
+            color: var(--green-dark);
+            font-size: 0.95rem;
+            word-break: keep-all;
+        }
+
+        .delete-btn {
+            background: none;
+            border: 1px solid var(--green-medium);
+            color: var(--green-main);
+            border-radius: 10px;
+            padding: 2px 8px;
+            font-size: 0.78rem;
+            cursor: pointer;
+        }
+
+        /* 하나로 합친 통합 카테고리 (햄버거 메뉴 + 내부 아코디언: 친구요청, 일기장, 방명록) */
+        .category-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 10px;
+            cursor: pointer;
+            user-select: none;
+        }
+
+        .category-header h2 {
+            margin-bottom: 0;
+        }
+
+        .hamburger-btn {
+            background-color: var(--green-main);
+            color: #FFFDF8;
+            border: 2px solid var(--green-medium);
+            border-radius: 14px;
+            padding: 8px 14px;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            font-family: inherit;
+            font-size: 0.9rem;
+            font-weight: 700;
+            transition: background-color 0.2s ease, transform 0.15s ease;
+            flex-shrink: 0;
+        }
+
+        body.dark-mode .hamburger-btn {
+            color: #1B2E23;
+        }
+
+        .hamburger-btn:hover {
+            background-color: var(--green-medium);
+            transform: translateY(-1px);
+        }
+
+        /* 햄버거 3줄 아이콘 */
+        .hamburger-bars {
+            display: inline-flex;
+            flex-direction: column;
+            justify-content: space-between;
+            width: 18px;
+            height: 14px;
+        }
+
+        .hamburger-bars span {
+            display: block;
+            height: 2.5px;
+            width: 100%;
+            background-color: #FFFDF8;
+            border-radius: 2px;
+            transition: transform 0.25s ease, opacity 0.25s ease;
+        }
+
+        body.dark-mode .hamburger-bars span {
+            background-color: #1B2E23;
+        }
+
+        /* 통합 카테고리 햄버거 열렸을 때 X자 애니메이션 */
+        .unified-category.menu-open .category-header .hamburger-bars span:nth-child(1),
+        .accordion-item.active .hamburger-bars span:nth-child(1) {
+            transform: translateY(5.75px) rotate(45deg);
+        }
+
+        .unified-category.menu-open .category-header .hamburger-bars span:nth-child(2),
+        .accordion-item.active .hamburger-bars span:nth-child(2) {
+            opacity: 0;
+        }
+
+        .unified-category.menu-open .category-header .hamburger-bars span:nth-child(3),
+        .accordion-item.active .hamburger-bars span:nth-child(3) {
+            transform: translateY(-5.75px) rotate(-45deg);
+        }
+
+        /* 햄버거 메뉴로 열리는 아코디언 그룹 컨테이너 */
+        .category-drawer {
+            display: none;
+            margin-top: 18px;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .unified-category.menu-open .category-drawer {
+            display: flex;
+        }
+
+        /* 카테고리 내부 개별 아코디언 아이템 (친구요청 / 일기장 / 방명록) */
+        .accordion-item {
+            background-color: var(--beige-soft);
+            border: 2px solid var(--beige-border);
+            border-radius: 20px;
+            padding: 16px 18px;
+            transition: border-color 0.2s ease;
+        }
+
+        .accordion-item.active {
+            border-color: var(--green-main);
+            background-color: var(--beige-card);
+        }
+
+        .accordion-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            cursor: pointer;
+            user-select: none;
+            gap: 10px;
+        }
+
+        .accordion-title {
+            font-size: 1.05rem;
+            font-weight: 700;
+            color: var(--green-dark);
+        }
+
+        .accordion-content {
+            display: none;
+            margin-top: 16px;
+            padding-top: 16px;
+            border-top: 2px dashed var(--beige-border);
+        }
+
+        .accordion-item.active .accordion-content {
+            display: block;
+        }
+
+        /* 하단 푸터 둥근 카드 */
+        footer {
+            background-color: var(--beige-soft);
+            border: 2px solid var(--green-medium);
+            border-radius: 26px;
+            padding: 24px 20px;
+            text-align: center;
+            color: var(--green-dark);
+            font-weight: 600;
+            word-break: keep-all;
+            box-shadow: 0 6px 16px var(--shadow-color);
+        }
+
+        footer::before {
+            content: "🐩 🐶 🐾 🐩 🐶";
+            display: block;
+            font-size: 1.3rem;
+            margin-bottom: 8px;
+        }
+
+        footer::after {
+            content: "🐾 멍멍! 두부랑 친구해요 🐩";
+            display: block;
+            margin-top: 10px;
+            font-size: 0.9rem;
+            color: var(--green-main);
+        }
+
+        /* 스마트폰 등 작은 화면 최적화 */
+        @media (max-width: 480px) {
+            body {
+                padding: 16px 12px 32px;
+            }
+
+            .top-bar {
+                flex-direction: column;
+                align-items: stretch;
+                text-align: center;
+            }
+
+            .top-actions {
+                justify-content: center;
+            }
+
+            header {
+                padding: 24px 16px;
+                border-radius: 24px;
+            }
+
+            header h1 {
+                font-size: 1.3rem;
+            }
+
+            section {
+                padding: 20px 16px;
+                border-radius: 22px;
+            }
+
+            section h2 {
+                font-size: 1.1rem;
+            }
+
+            ol li {
+                padding: 12px 14px;
+                font-size: 0.95rem;
+            }
+
+            .form-row {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- 상단 유틸리티 바: 조회수 + 다크모드 전환 버튼 + 40dB 멍멍 소리 버튼 -->
+    <div class="top-bar">
+        <div class="view-badge" id="viewCounter">🐾 방문 조회수: 오늘 1회 / 전체 1회</div>
+        <div class="top-actions">
+            <button type="button" class="btn btn-soft" id="barkTopBtn">🔊 40dB 멍멍!</button>
+            <button type="button" class="btn" id="darkModeBtn">🌙 다크모드 전환</button>
+        </div>
+    </div>
+
+    <!-- 제일 위로 배치한 통합 카테고리: 두부의 생활공간 (햄버거 메뉴 + 아코디언: 일기장 · 방명록 · 친구요청) -->
+    <section class="unified-category" id="unifiedCategory" style="margin-bottom: 20px;">
+        <div class="category-header" id="categoryHamburgerToggle">
+            <h2>두부의 생활공간</h2>
+            <button type="button" class="hamburger-btn" id="mainCategoryBtn" aria-expanded="false">
+                <span class="hamburger-bars">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </span>
+                <span class="hamburger-label" id="mainCategoryLabel">메뉴 열기</span>
+            </button>
+        </div>
+
+        <div class="category-drawer">
+            <!-- 아코디언 1: 일기장 -->
+            <div class="accordion-item" id="acc-diary">
+                <div class="accordion-header">
+                    <span class="accordion-title">🐩 일기장 (두부의 포근한 일기장)</span>
+                    <button type="button" class="hamburger-btn" aria-expanded="false">
+                        <span class="hamburger-bars">
+                            <span></span>
+                            <span></span>
+                            <span></span>
+                        </span>
+                        <span class="hamburger-label">열기</span>
+                    </button>
+                </div>
+                <div class="accordion-content">
+                    <div class="form-row">
+                        <input type="date" id="diaryDate" class="input-field" style="margin-bottom: 0;">
+                        <select id="diaryMood" class="select-field" style="margin-bottom: 0;">
+                            <option value="🐩 신나는 산책날">🐩 신나는 산책날</option>
+                            <option value="🍗 닭간식 먹은 날">🍗 닭간식 먹은 날</option>
+                            <option value="🐱 초잉이랑 논 날">🐱 초잉이랑 논 날</option>
+                            <option value="🧶 양털담요 낮잠날">🧶 양털담요 낮잠날</option>
+                        </select>
+                    </div>
+                    <input type="text" id="diaryTitle" class="input-field" placeholder="일기 제목을 적어주세요">
+                    <textarea id="diaryContent" class="textarea-field" rows="3" placeholder="오늘 두부와 있었던 따뜻한 이야기를 기록해 보세요"></textarea>
+                    <button type="button" class="btn" id="addDiaryBtn" style="width: 100%;">🐾 일기장에 기록하기</button>
+
+                    <div class="item-list" id="diaryList"></div>
+                </div>
+            </div>
+
+            <!-- 아코디언 2: 방명록 -->
+            <div class="accordion-item" id="acc-guestbook">
+                <div class="accordion-header">
+                    <span class="accordion-title">🦴 방명록 (두부네 방명록)</span>
+                    <button type="button" class="hamburger-btn" aria-expanded="false">
+                        <span class="hamburger-bars">
+                            <span></span>
+                            <span></span>
+                            <span></span>
+                        </span>
+                        <span class="hamburger-label">열기</span>
+                    </button>
+                </div>
+                <div class="accordion-content">
+                    <input type="text" id="guestName" class="input-field" placeholder="방문자 이름">
+                    <textarea id="guestMessage" class="textarea-field" rows="2" placeholder="두부에게 귀여운 방명록 인사를 남겨주세요!"></textarea>
+                    <button type="button" class="btn" id="addGuestbookBtn" style="width: 100%;">🐩 방명록 남기기</button>
+
+                    <div class="item-list" id="guestbookList"></div>
+                </div>
+            </div>
+
+            <!-- 아코디언 3: 친구요청 -->
+            <div class="accordion-item" id="acc-friend">
+                <div class="accordion-header">
+                    <span class="accordion-title">🐾 친구요청 (두부랑 친구 만들기)</span>
+                    <button type="button" class="hamburger-btn" aria-expanded="false">
+                        <span class="hamburger-bars">
+                            <span></span>
+                            <span></span>
+                            <span></span>
+                        </span>
+                        <span class="hamburger-label">열기</span>
+                    </button>
+                </div>
+                <div class="accordion-content">
+                    <p id="friendCountText">현재 <strong>0명</strong>의 친구가 두부와 함께하고 있어요!</p>
+                    <div class="form-row">
+                        <input type="text" id="friendNameInput" class="input-field" placeholder="친구 이름 (또는 반려동물 이름)" style="margin-bottom: 0;">
+                        <button type="button" class="btn" id="addFriendBtn" style="flex-shrink: 0;">🐾 친구 신청</button>
+                    </div>
+                    <div class="friend-list" id="friendList"></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <header>
+        <h1>안녕! 나의 소중한 반려견 '두부'를 소개할게</h1>
+        <p>친구들아, 우리 집 귀여운 강아지 두부를 만나봐!</p>
+    </header>
+
+    <hr>
+
+    <main>
+        <section>
+            <h2>두부의 모습</h2>
+            <figure>
+                <img src="dubu.jpg" alt="귀여운 반려견 두부의 사진" width="350">
+                <figcaption>▲ 포근하게 쉬고 있는 귀여운 두부의 모습</figcaption>
+            </figure>
+
+            <!-- 40dB 강아지 짖는 소리 컨트롤 박스 -->
+            <div class="bark-box">
+                <button type="button" class="btn" id="barkMainBtn">🐩 두부 목소리 듣기 (40dB 조용한 멍멍!)</button>
+                <div class="bark-status" id="barkStatus">
+                    🔈 현재 음량: 약 40 dB (조용한 도서관·속삭임 수준의 포근한 소리)
+                </div>
+            </div>
+        </section>
+
+        <hr>
+
+        <section>
+            <h2>기본 소개</h2>
+            <p><strong>이름:</strong> 두부</p>
+            <p>우리 <strong>두부</strong>는 밖에 나가서 신나게 <strong>산책</strong>하는 것과 날아다니는 <strong>새</strong>를 구경하는 것을 정말 좋아해!</p>
+        </section>
+
+        <hr>
+
+        <section>
+            <h2>두부가 좋아하는 것 BEST 5</h2>
+            <ol>
+                <li>건조 닭 간식</li>
+                <li>애기들</li>
+                <li>삑삑이 장난감</li>
+                <li>초잉 (우리집 고양이)</li>
+                <li>포근한 양털 담요</li>
+            </ol>
+        </section>
+
+        <hr>
+
+        <!-- 1. 반응 기능 & 응원 기능 -->
+        <section>
+            <h2>두부에게 반응 & 응원 보내기</h2>
+            <div class="reaction-grid" id="reactionContainer"></div>
+
+            <div style="margin-top: 20px; text-align: center;">
+                <button type="button" class="btn" id="cheerBtn" style="width: 100%; padding: 14px; font-size: 1.05rem;">
+                    🐩 두부에게 따뜻한 응원 보내기! (클릭) 🐾
+                </button>
+                <div class="cheer-meter">
+                    <div class="cheer-fill" id="cheerFill">0%</div>
+                </div>
+                <p id="cheerMessage" style="margin-top: 8px; font-size: 0.92rem;">
+                    응원 버튼을 눌러 하얀 푸들 두부에게 에너지를 선물해 주세요!
+                </p>
+            </div>
+        </section>
+
+        <hr>
+
+        <!-- 2. 두부에게 디엠(DM) 보내기 기능 -->
+        <section>
+            <h2>두부에게 1:1 디엠(DM) 보내기</h2>
+            <div class="dm-window" id="dmWindow"></div>
+            <div class="form-row">
+                <input type="text" id="dmInput" class="input-field" placeholder="두부에게 말을 걸어보세요! (예: 산책 갈래?, 간식 줄까?)" style="margin-bottom: 0;">
+                <button type="button" class="btn" id="dmSendBtn" style="flex-shrink: 0;">🐩 전송</button>
+            </div>
+        </section>
+    </main>
+
+    <hr>
+
+    <footer>
+        <p>우리 귀염둥이 두부 예쁘게 봐줘서 고마워! 다음에 산책할 때 만나면 반갑게 인사해 줘.</p>
+    </footer>
+
+    <script>
+        /* ==========================================
+           1. 40dB 강아지(미니어처 푸들) 짖는 소리 합성기
+           ========================================== */
+        let audioCtx = null;
+
+        function playGentlePoodleBark40dB() {
+            if (!audioCtx) {
+                const AudioContextClass = window.AudioContext || window.webkitAudioContext;
+                audioCtx = new AudioContextClass();
+            }
+            if (audioCtx.state === 'suspended') {
+                audioCtx.resume();
+            }
+
+            const now = audioCtx.currentTime;
+
+            // 두 번 짧고 귀엽게 "멍! 멍!" (약 40dB의 부드럽고 조용한 실내 속삭임 음량: gain 0.08)
+            [0, 0.24].forEach((offset, idx) => {
+                const start = now + offset;
+                const duration = 0.14;
+
+                const osc = audioCtx.createOscillator();
+                const filter = audioCtx.createBiquadFilter();
+                const gainNode = audioCtx.createGain();
+
+                // 미니어처 푸들의 귀여운 목소리 톤 주파수 곡선
+                osc.type = 'triangle';
+                const baseFreq = idx === 0 ? 520 : 580;
+                osc.frequency.setValueAtTime(baseFreq, start);
+                osc.frequency.exponentialRampToValueAtTime(baseFreq * 1.45, start + 0.04);
+                osc.frequency.exponentialRampToValueAtTime(baseFreq * 0.72, start + duration);
+
+                // 부드러운 포먼트 필터
+                filter.type = 'bandpass';
+                filter.frequency.setValueAtTime(900, start);
+                filter.Q.setValueAtTime(2.5, start);
+
+                // 40dB 수준에 맞춘 조용하고 은은한 볼륨 엔벨로프 (최대 게인 0.08)
+                gainNode.gain.setValueAtTime(0.001, start);
+                gainNode.gain.linearRampToValueAtTime(0.08, start + 0.02);
+                gainNode.gain.exponentialRampToValueAtTime(0.001, start + duration);
+
+                osc.connect(filter);
+                filter.connect(gainNode);
+                gainNode.connect(audioCtx.destination);
+
+                osc.start(start);
+                osc.stop(start + duration);
+            });
+
+            const statusEl = document.getElementById('barkStatus');
+            statusEl.textContent = '🐩 "멍! 멍!" (40 dB 조용하고 포근한 크기로 두부가 인사했어요!)';
+            setTimeout(() => {
+                statusEl.textContent = '🔈 현재 음량: 약 40 dB (조용한 도서관·속삭임 수준의 포근한 소리)';
+            }, 2500);
+        }
+
+        document.getElementById('barkTopBtn').addEventListener('click', playGentlePoodleBark40dB);
+        document.getElementById('barkMainBtn').addEventListener('click', playGentlePoodleBark40dB);
+
+        /* ==========================================
+           2. 다크모드 전환 기능
+           ========================================== */
+        const darkModeBtn = document.getElementById('darkModeBtn');
+        const savedTheme = localStorage.getItem('dubu_dark_mode');
+
+        if (savedTheme === 'dark') {
+            document.body.classList.add('dark-mode');
+            darkModeBtn.textContent = '☀️ 라이트모드 전환';
+        }
+
+        darkModeBtn.addEventListener('click', () => {
+            document.body.classList.toggle('dark-mode');
+            const isDark = document.body.classList.contains('dark-mode');
+            darkModeBtn.textContent = isDark ? '☀️ 라이트모드 전환' : '🌙 다크모드 전환';
+            localStorage.setItem('dubu_dark_mode', isDark ? 'dark' : 'light');
+        });
+
+        /* ==========================================
+           3. 조회수 기능 (오늘 / 전체)
+           ========================================== */
+        function updateViewCount() {
+            const todayKey = new Date().toISOString().slice(0, 10);
+            const savedDate = localStorage.getItem('dubu_view_date');
+            let todayViews = parseInt(localStorage.getItem('dubu_today_views') || '0', 10);
+            let totalViews = parseInt(localStorage.getItem('dubu_total_views') || '0', 10);
+
+            if (savedDate !== todayKey) {
+                todayViews = 1;
+                localStorage.setItem('dubu_view_date', todayKey);
+            } else {
+                todayViews += 1;
+            }
+            totalViews += 1;
+
+            localStorage.setItem('dubu_today_views', String(todayViews));
+            localStorage.setItem('dubu_total_views', String(totalViews));
+
+            document.getElementById('viewCounter').textContent =
+                `🐾 방문 조회수: 오늘 ${todayViews}회 / 전체 ${totalViews}회`;
+        }
+        updateViewCount();
+
+        /* ==========================================
+           4. 반응(리액션) 기능
+           ========================================== */
+        const defaultReactions = [
+            { id: 'cute', emoji: '🐩', label: '귀여워요', count: 12 },
+            { id: 'snack', emoji: '🍗', label: '닭간식 주기', count: 9 },
+            { id: 'walk', emoji: '🐾', label: '산책 가자', count: 15 },
+            { id: 'toy', emoji: '🦴', label: '삑삑이 놀이', count: 7 }
+        ];
+
+        let reactions = JSON.parse(localStorage.getItem('dubu_reactions') || 'null') || defaultReactions;
+
+        function renderReactions() {
+            const container = document.getElementById('reactionContainer');
+            container.innerHTML = '';
+            reactions.forEach((item, index) => {
+                const btn = document.createElement('button');
+                btn.type = 'button';
+                btn.className = 'reaction-btn';
+                btn.innerHTML = `
+                    <span>${item.emoji} ${item.label}</span>
+                    <span class="reaction-count">${item.count}</span>
+                `;
+                btn.addEventListener('click', () => {
+                    reactions[index].count += 1;
+                    localStorage.setItem('dubu_reactions', JSON.stringify(reactions));
+                    renderReactions();
+                    playGentlePoodleBark40dB();
+                });
+                container.appendChild(btn);
+            });
+        }
+        renderReactions();
+
+        /* ==========================================
+           5. 응원 기능
+           ========================================== */
+        let cheerCount = parseInt(localStorage.getItem('dubu_cheer_count') || '25', 10);
+        const cheerMessages = [
+            '🐩 두부가 꼬리를 프로펠러처럼 흔들며 좋아해요!',
+            '🐾 응원 덕분에 두부가 신나게 산책할 힘이 났어요!',
+            '🦴 두부가 좋아하는 양털 담요 위에서 행복하게 웃고 있어요!',
+            '🐶 초잉이랑 두부가 나란히 앉아 고마워하고 있어요!'
+        ];
+
+        function updateCheerUI() {
+            const percent = Math.min(100, cheerCount);
+            const fill = document.getElementById('cheerFill');
+            fill.style.width = percent + '%';
+            fill.textContent = `응원 ${cheerCount}회 (${percent}%)`;
+        }
+        updateCheerUI();
+
+        document.getElementById('cheerBtn').addEventListener('click', () => {
+            cheerCount += 5;
+            localStorage.setItem('dubu_cheer_count', String(cheerCount));
+            updateCheerUI();
+            const msg = cheerMessages[Math.floor(Math.random() * cheerMessages.length)];
+            document.getElementById('cheerMessage').textContent = msg;
+            playGentlePoodleBark40dB();
+        });
+
+        /* ==========================================
+           6. 친구 만들기 기능
+           ========================================== */
+        const defaultFriends = ['초잉이(우리집 고양이)', '옆집 강아지 보리', '산책 친구 콩이'];
+        let friends = JSON.parse(localStorage.getItem('dubu_friends') || 'null') || defaultFriends;
+
+        function renderFriends() {
+            const listEl = document.getElementById('friendList');
+            const countEl = document.getElementById('friendCountText');
+            countEl.innerHTML = `현재 <strong>${friends.length}명</strong>의 소중한 친구가 두부와 함께하고 있어요!`;
+            listEl.innerHTML = '';
+
+            friends.forEach((name, idx) => {
+                const tag = document.createElement('span');
+                tag.className = 'friend-tag';
+                tag.innerHTML = `🐩 ${name} <button type="button" class="delete-btn" title="삭제">✕</button>`;
+                tag.querySelector('button').addEventListener('click', () => {
+                    friends.splice(idx, 1);
+                    localStorage.setItem('dubu_friends', JSON.stringify(friends));
+                    renderFriends();
+                });
+                listEl.appendChild(tag);
+            });
+        }
+        renderFriends();
+
+        document.getElementById('addFriendBtn').addEventListener('click', () => {
+            const input = document.getElementById('friendNameInput');
+            const name = input.value.trim();
+            if (!name) return;
+            friends.push(name);
+            localStorage.setItem('dubu_friends', JSON.stringify(friends));
+            input.value = '';
+            renderFriends();
+            playGentlePoodleBark40dB();
+        });
+
+        /* ==========================================
+           7. 디엠(DM) 기능
+           ========================================== */
+        const defaultDMs = [
+            { sender: 'dubu', text: '안녕! 나는 하얀 미니어처 푸들 두부야 🐩 나한테 디엠 보내줘서 고마워!' }
+        ];
+        let dmList = JSON.parse(localStorage.getItem('dubu_dms') || 'null') || defaultDMs;
+
+        function renderDMs() {
+            const win = document.getElementById('dmWindow');
+            win.innerHTML = '';
+            dmList.forEach(msg => {
+                const bubble = document.createElement('div');
+                bubble.className = 'dm-bubble ' + (msg.sender === 'dubu' ? 'dm-dubu' : 'dm-me');
+                bubble.textContent = msg.sender === 'dubu' ? `🐩 두부: ${msg.text}` : `🐾 나: ${msg.text}`;
+                win.appendChild(bubble);
+            });
+            win.scrollTop = win.scrollHeight;
+        }
+        renderDMs();
+
+        function generateDubuReply(userText) {
+            if (userText.includes('산책')) {
+                return '산책?! 나 산책이랑 날아다니는 새 구경하는 거 제일 좋아해! 얼른 나가자 🐾🐩';
+            }
+            if (userText.includes('간식') || userText.includes('닭')) {
+                return '건조 닭 간식 냄새가 나는 것 같아! 냠냠 빨리 먹고 싶어 🦴🐩';
+            }
+            if (userText.includes('초잉') || userText.includes('고양이')) {
+                return '우리 집 고양이 초잉이는 내 단짝 친구야! 🐾';
+            }
+            if (userText.includes('담요') || userText.includes('잠')) {
+                return '포근한 양털 담요 위에서 낮잠 자면 정말 따뜻해 🐩';
+            }
+            if (userText.includes('삑삑')) {
+                return '삑삑이 장난감 던져주면 신나게 물어올게! 🐶';
+            }
+            return '멍멍!(40dB) 나랑 이야기해 줘서 정말 기뻐! 우리 다음에 산책할 때 꼭 만나자 🐩🐾';
+        }
+
+        function sendDM() {
+            const input = document.getElementById('dmInput');
+            const text = input.value.trim();
+            if (!text) return;
+
+            dmList.push({ sender: 'me', text });
+            input.value = '';
+            renderDMs();
+
+            setTimeout(() => {
+                const reply = generateDubuReply(text);
+                dmList.push({ sender: 'dubu', text: reply });
+                localStorage.setItem('dubu_dms', JSON.stringify(dmList));
+                renderDMs();
+                playGentlePoodleBark40dB();
+            }, 450);
+        }
+
+        document.getElementById('dmSendBtn').addEventListener('click', sendDM);
+        document.getElementById('dmInput').addEventListener('keydown', (e) => {
+            if (e.key === 'Enter') sendDM();
+        });
+
+        /* ==========================================
+           8. 일기장 기능
+           ========================================== */
+        const todayStr = new Date().toISOString().slice(0, 10);
+        document.getElementById('diaryDate').value = todayStr;
+
+        const defaultDiaries = [
+            {
+                date: todayStr,
+                mood: '🐩 신나는 산책날',
+                title: '공원에서 참새를 구경하고 양털 담요에서 낮잠 잔 날',
+                content: '오늘 산책 나가서 날아다니는 새들을 한참 구경했다! 집에 와서 건조 닭 간식도 먹고 포근한 양털 담요 위에서 초잉이랑 낮잠을 잤다.'
+            }
+        ];
+        let diaries = JSON.parse(localStorage.getItem('dubu_diaries') || 'null') || defaultDiaries;
+
+        function renderDiaries() {
+            const listEl = document.getElementById('diaryList');
+            listEl.innerHTML = '';
+            diaries.forEach((d, idx) => {
+                const card = document.createElement('div');
+                card.className = 'item-card';
+                card.innerHTML = `
+                    <div class="item-header">
+                        <span>${d.date} · ${d.mood}</span>
+                        <button type="button" class="delete-btn">삭제</button>
+                    </div>
+                    <div class="item-body">
+                        <strong>${d.title}</strong><br>
+                        ${d.content}
+                    </div>
+                `;
+                card.querySelector('button').addEventListener('click', () => {
+                    diaries.splice(idx, 1);
+                    localStorage.setItem('dubu_diaries', JSON.stringify(diaries));
+                    renderDiaries();
+                });
+                listEl.appendChild(card);
+            });
+        }
+        renderDiaries();
+
+        document.getElementById('addDiaryBtn').addEventListener('click', () => {
+            const date = document.getElementById('diaryDate').value || todayStr;
+            const mood = document.getElementById('diaryMood').value;
+            const titleInput = document.getElementById('diaryTitle');
+            const contentInput = document.getElementById('diaryContent');
+
+            const title = titleInput.value.trim();
+            const content = contentInput.value.trim();
+            if (!title || !content) return;
+
+            diaries.unshift({ date, mood, title, content });
+            localStorage.setItem('dubu_diaries', JSON.stringify(diaries));
+            titleInput.value = '';
+            contentInput.value = '';
+            renderDiaries();
+        });
+
+        /* ==========================================
+           9. 방명록 기능
+           ========================================== */
+        const defaultGuestbook = [
+            {
+                name: '동네 친구',
+                message: '두부야 하얀 털이 정말 솜사탕 같아! 다음에 산책할 때 또 보자 🐩',
+                time: todayStr
+            }
+        ];
+        let guestbook = JSON.parse(localStorage.getItem('dubu_guestbook') || 'null') || defaultGuestbook;
+
+        function renderGuestbook() {
+            const listEl = document.getElementById('guestbookList');
+            listEl.innerHTML = '';
+            guestbook.forEach((g, idx) => {
+                const card = document.createElement('div');
+                card.className = 'item-card';
+                card.innerHTML = `
+                    <div class="item-header">
+                        <span>🐾 ${g.name} (${g.time})</span>
+                        <button type="button" class="delete-btn">삭제</button>
+                    </div>
+                    <div class="item-body">${g.message}</div>
+                `;
+                card.querySelector('button').addEventListener('click', () => {
+                    guestbook.splice(idx, 1);
+                    localStorage.setItem('dubu_guestbook', JSON.stringify(guestbook));
+                    renderGuestbook();
+                });
+                listEl.appendChild(card);
+            });
+        }
+        renderGuestbook();
+
+        document.getElementById('addGuestbookBtn').addEventListener('click', () => {
+            const nameInput = document.getElementById('guestName');
+            const msgInput = document.getElementById('guestMessage');
+            const name = nameInput.value.trim();
+            const message = msgInput.value.trim();
+            if (!name || !message) return;
+
+            guestbook.unshift({ name, message, time: todayStr });
+            localStorage.setItem('dubu_guestbook', JSON.stringify(guestbook));
+            nameInput.value = '';
+            msgInput.value = '';
+            renderGuestbook();
+            playGentlePoodleBark40dB();
+        });
+
+        /* ==========================================
+           10. 통합 카테고리 햄버거 메뉴 & 아코디언 기능 (친구요청, 일기장, 방명록)
+           ========================================== */
+        const unifiedCategory = document.getElementById('unifiedCategory');
+        const categoryToggle = document.getElementById('categoryHamburgerToggle');
+        const mainCategoryBtn = document.getElementById('mainCategoryBtn');
+        const mainCategoryLabel = document.getElementById('mainCategoryLabel');
+
+        // 상위 통합 카테고리 햄버거 버튼 클릭 시 전체 카테고리 메뉴 열기/접기
+        categoryToggle.addEventListener('click', () => {
+            unifiedCategory.classList.toggle('menu-open');
+            const isOpen = unifiedCategory.classList.contains('menu-open');
+            mainCategoryBtn.setAttribute('aria-expanded', String(isOpen));
+            mainCategoryLabel.textContent = isOpen ? '메뉴 접기' : '메뉴 열기';
+        });
+
+        // 카테고리 내부의 3가지 항목(친구요청, 일기장, 방명록) 아코디언 동작
+        const accordionItems = document.querySelectorAll('.accordion-item');
+
+        accordionItems.forEach(item => {
+            const header = item.querySelector('.accordion-header');
+            const btn = item.querySelector('.hamburger-btn');
+            const label = item.querySelector('.hamburger-label');
+
+            header.addEventListener('click', () => {
+                const isAlreadyOpen = item.classList.contains('active');
+
+                // 다른 아코디언 항목은 자동으로 닫기
+                accordionItems.forEach(other => {
+                    other.classList.remove('active');
+                    const otherBtn = other.querySelector('.hamburger-btn');
+                    const otherLabel = other.querySelector('.hamburger-label');
+                    if (otherBtn) otherBtn.setAttribute('aria-expanded', 'false');
+                    if (otherLabel) otherLabel.textContent = '열기';
+                });
+
+                // 클릭한 항목 열기/접기
+                if (!isAlreadyOpen) {
+                    item.classList.add('active');
+                    btn.setAttribute('aria-expanded', 'true');
+                    label.textContent = '접기';
+                }
+            });
+        });
+    </script>
+</body>
+</html>

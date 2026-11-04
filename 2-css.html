@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>나의 반려견 두부를 소개합니다! 🐩</title>
+    <style>
+        /* 오직 베이지(Beige)와 초록색(Green) 계열만 사용한 따뜻하고 포근한 팔레트 */
+        :root {
+            --beige-bg: #F7F2E7;
+            --beige-card: #FFFDF8;
+            --beige-soft: #EFE6D5;
+            --beige-border: #DFD3BC;
+            --green-dark: #2C4C38;
+            --green-main: #436E52;
+            --green-medium: #689477;
+            --green-light: #D9E6DC;
+            --green-pale: #EAF2EC;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            background-color: var(--beige-bg);
+            color: var(--green-dark);
+            font-family: 'Apple SD Gothic Neo', 'Malgun Gothic', '맑은 고딕', sans-serif;
+            line-height: 1.7;
+            padding: 24px 16px 40px;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        /* 상단 헤더 둥근 카드 */
+        header {
+            background-color: var(--green-main);
+            color: var(--beige-card);
+            padding: 32px 24px;
+            border-radius: 28px;
+            text-align: center;
+            box-shadow: 0 8px 20px rgba(44, 76, 56, 0.15);
+            margin-bottom: 24px;
+            border: 3px solid var(--beige-soft);
+        }
+
+        header::before {
+            content: "🐩 🐾 🐶 🐾 🐩";
+            display: block;
+            font-size: 1.5rem;
+            margin-bottom: 12px;
+            letter-spacing: 4px;
+        }
+
+        header h1 {
+            font-size: 1.55rem;
+            line-height: 1.4;
+            margin-bottom: 12px;
+            word-break: keep-all;
+        }
+
+        header p {
+            background-color: var(--green-dark);
+            color: var(--beige-soft);
+            display: inline-block;
+            padding: 8px 18px;
+            border-radius: 20px;
+            font-size: 0.95rem;
+            word-break: keep-all;
+        }
+
+        header::after {
+            content: "🦴 🐩 🦴";
+            display: block;
+            font-size: 1.2rem;
+            margin-top: 14px;
+        }
+
+        /* 기존 hr을 귀여운 강아지 발바닥 구분선으로 꾸미기 */
+        hr {
+            border: none;
+            text-align: center;
+            margin: 20px 0;
+        }
+
+        hr::after {
+            content: "🐾 🐩 🐾 🐶 🐾";
+            font-size: 1.1rem;
+            color: var(--green-medium);
+            letter-spacing: 6px;
+        }
+
+        /* 각 섹션을 포근한 둥근 카드 형태로 제작 */
+        section {
+            background-color: var(--beige-card);
+            border: 2px solid var(--beige-border);
+            border-radius: 26px;
+            padding: 26px 22px;
+            box-shadow: 0 6px 16px rgba(67, 110, 82, 0.08);
+            margin-bottom: 8px;
+        }
+
+        section h2 {
+            color: var(--green-dark);
+            background-color: var(--green-light);
+            display: inline-block;
+            padding: 8px 20px;
+            border-radius: 20px;
+            font-size: 1.2rem;
+            margin-bottom: 18px;
+            border: 2px solid var(--green-medium);
+        }
+
+        section h2::before {
+            content: "🐩 ";
+        }
+
+        section h2::after {
+            content: " 🐾";
+        }
+
+        /* 사진 카드 영역 */
+        figure {
+            background-color: var(--beige-soft);
+            border: 3px dashed var(--green-medium);
+            border-radius: 22px;
+            padding: 20px 16px;
+            text-align: center;
+        }
+
+        figure::before {
+            content: "🐶 하얀 미니어처 푸들 두부 🐩";
+            display: block;
+            font-weight: bold;
+            color: var(--green-main);
+            margin-bottom: 12px;
+            font-size: 0.95rem;
+        }
+
+        img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 18px;
+            border: 4px solid var(--beige-card);
+            background-color: var(--green-pale);
+            color: var(--green-dark);
+            display: block;
+            margin: 0 auto 12px;
+        }
+
+        figcaption {
+            background-color: var(--beige-card);
+            color: var(--green-main);
+            padding: 10px 14px;
+            border-radius: 14px;
+            font-size: 0.9rem;
+            word-break: keep-all;
+            border: 1px solid var(--beige-border);
+        }
+
+        /* 기본 소개 영역 */
+        section p {
+            background-color: var(--beige-bg);
+            padding: 14px 18px;
+            border-radius: 18px;
+            margin-bottom: 12px;
+            border: 1px solid var(--beige-border);
+            word-break: keep-all;
+        }
+
+        section p:last-child {
+            margin-bottom: 0;
+        }
+
+        section p::before {
+            content: "🐩 ";
+        }
+
+        strong {
+            color: var(--green-main);
+            background-color: var(--green-light);
+            padding: 2px 8px;
+            border-radius: 8px;
+        }
+
+        /* 두부가 좋아하는 것 BEST 5 리스트 */
+        ol {
+            list-style: none;
+            counter-reset: fav-counter;
+        }
+
+        ol li {
+            counter-increment: fav-counter;
+            background-color: var(--green-pale);
+            border: 2px solid var(--green-light);
+            border-radius: 18px;
+            padding: 14px 16px;
+            margin-bottom: 10px;
+            font-weight: 600;
+            color: var(--green-dark);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        ol li:last-child {
+            margin-bottom: 0;
+        }
+
+        ol li::before {
+            content: "🐩 " counter(fav-counter) ". ";
+            background-color: var(--green-main);
+            color: var(--beige-card);
+            padding: 4px 12px;
+            border-radius: 14px;
+            margin-right: 12px;
+            font-size: 0.9rem;
+            flex-shrink: 0;
+        }
+
+        ol li::after {
+            content: "🐶🐾";
+            margin-left: auto;
+            padding-left: 8px;
+        }
+
+        /* 하단 푸터 둥근 카드 */
+        footer {
+            background-color: var(--beige-soft);
+            border: 2px solid var(--green-medium);
+            border-radius: 26px;
+            padding: 24px 20px;
+            text-align: center;
+            color: var(--green-dark);
+            font-weight: 600;
+            word-break: keep-all;
+            box-shadow: 0 6px 16px rgba(44, 76, 56, 0.08);
+        }
+
+        footer::before {
+            content: "🐩 🐶 🐾 🐩 🐶";
+            display: block;
+            font-size: 1.3rem;
+            margin-bottom: 8px;
+        }
+
+        footer::after {
+            content: "🐾 멍멍! 두부랑 친구해요 🐩";
+            display: block;
+            margin-top: 10px;
+            font-size: 0.9rem;
+            color: var(--green-main);
+        }
+
+        /* 스마트폰 등 작은 화면 최적화 */
+        @media (max-width: 480px) {
+            body {
+                padding: 16px 12px 32px;
+            }
+
+            header {
+                padding: 24px 16px;
+                border-radius: 24px;
+            }
+
+            header h1 {
+                font-size: 1.3rem;
+            }
+
+            section {
+                padding: 20px 16px;
+                border-radius: 22px;
+            }
+
+            section h2 {
+                font-size: 1.1rem;
+            }
+
+            ol li {
+                padding: 12px 14px;
+                font-size: 0.95rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>안녕! 나의 소중한 반려견 '두부'를 소개할게</h1>
+        <p>친구들아, 우리 집 귀여운 강아지 두부를 만나봐!</p>
+    </header>
+
+    <hr>
+
+    <main>
+        <section>
+            <h2>두부의 모습</h2>
+            <figure>
+                <img src="dubu.jpg" alt="귀여운 반려견 두부의 사진" width="350">
+                <figcaption>▲ 포근하게 쉬고 있는 귀여운 두부의 모습</figcaption>
+            </figure>
+        </section>
+
+        <hr>
+
+        <section>
+            <h2>기본 소개</h2>
+            <p><strong>이름:</strong> 두부</p>
+            <p>우리 <strong>두부</strong>는 밖에 나가서 신나게 <strong>산책</strong>하는 것과 날아다니는 <strong>새</strong>를 구경하는 것을 정말 좋아해!</p>
+        </section>
+
+        <hr>
+
+        <section>
+            <h2>두부가 좋아하는 것 BEST 5</h2>
+            <ol>
+                <li>건조 닭 간식</li>
+                <li>애기들</li>
+                <li>삑삑이 장난감</li>
+                <li>초잉 (우리집 고양이)</li>
+                <li>포근한 양털 담요</li>
+            </ol>
+        </section>
+    </main>
+
+    <hr>
+
+    <footer>
+        <p>우리 귀염둥이 두부 예쁘게 봐줘서 고마워! 다음에 산책할 때 만나면 반갑게 인사해 줘.</p>
+    </footer>
+</body>
+</html>
