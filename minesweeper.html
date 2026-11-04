@@ -1,0 +1,511 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>두부 사진 지뢰찾기 🐩🐾</title>
+    <style>
+        /* 베이지(Beige) & 초록색(Green) 계열의 따뜻하고 포근한 팔레트 */
+        :root {
+            --beige-bg: #F7F2E7;
+            --beige-card: #FFFDF8;
+            --beige-soft: #EFE6D5;
+            --beige-border: #DFD3BC;
+            --green-dark: #2C4C38;
+            --green-main: #436E52;
+            --green-medium: #689477;
+            --green-light: #D9E6DC;
+            --green-pale: #EAF2EC;
+            --shadow-color: rgba(44, 76, 56, 0.12);
+        }
+
+        body.dark-mode {
+            --beige-bg: #1B2E23;
+            --beige-card: #243B2E;
+            --beige-soft: #2E4A3A;
+            --beige-border: #3E614D;
+            --green-dark: #F5EFE2;
+            --green-main: #88B397;
+            --green-medium: #689477;
+            --green-light: #355442;
+            --green-pale: #2A4435;
+            --shadow-color: rgba(15, 28, 20, 0.45);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            background-color: var(--beige-bg);
+            color: var(--green-dark);
+            font-family: 'Apple SD Gothic Neo', 'Malgun Gothic', '맑은 고딕', sans-serif;
+            line-height: 1.7;
+            padding: 24px 16px 40px;
+            max-width: 600px;
+            margin: 0 auto;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        .top-bar {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 16px;
+            background-color: var(--beige-card);
+            border: 2px solid var(--beige-border);
+            padding: 12px 16px;
+            border-radius: 22px;
+            box-shadow: 0 4px 12px var(--shadow-color);
+        }
+
+        .btn {
+            background-color: var(--green-main);
+            color: #FFFDF8;
+            border: 2px solid var(--green-medium);
+            padding: 8px 14px;
+            border-radius: 16px;
+            font-size: 0.9rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: transform 0.15s ease, background-color 0.2s ease;
+            font-family: inherit;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+        }
+
+        body.dark-mode .btn {
+            color: #1B2E23;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            background-color: var(--green-medium);
+        }
+
+        .btn-soft {
+            background-color: var(--beige-soft);
+            color: var(--green-dark);
+            border: 2px solid var(--beige-border);
+        }
+
+        body.dark-mode .btn-soft {
+            color: var(--green-dark);
+        }
+
+        header {
+            background-color: var(--green-main);
+            color: #FFFDF8;
+            padding: 28px 20px;
+            border-radius: 28px;
+            text-align: center;
+            box-shadow: 0 8px 20px var(--shadow-color);
+            margin-bottom: 24px;
+            border: 3px solid var(--beige-soft);
+        }
+
+        body.dark-mode header {
+            background-color: #2E4A3A;
+            border-color: var(--green-medium);
+        }
+
+        header h1 {
+            font-size: 1.5rem;
+            margin-bottom: 8px;
+            word-break: keep-all;
+        }
+
+        header p {
+            background-color: #2C4C38;
+            color: #EFE6D5;
+            display: inline-block;
+            padding: 6px 16px;
+            border-radius: 18px;
+            font-size: 0.92rem;
+        }
+
+        section {
+            background-color: var(--beige-card);
+            border: 2px solid var(--beige-border);
+            border-radius: 26px;
+            padding: 24px 20px;
+            box-shadow: 0 6px 16px var(--shadow-color);
+        }
+
+        /* 지뢰찾기 상단 상태바 (두부 사진 포함) */
+        .ms-status-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background-color: var(--beige-soft);
+            border: 2px solid var(--beige-border);
+            border-radius: 20px;
+            padding: 12px 16px;
+            margin-bottom: 14px;
+            gap: 10px;
+        }
+
+        .ms-stat {
+            background-color: var(--beige-card);
+            border: 1px solid var(--green-medium);
+            padding: 6px 12px;
+            border-radius: 14px;
+            font-weight: 700;
+            font-size: 0.92rem;
+            color: var(--green-dark);
+        }
+
+        .ms-dubu-reset {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            background-color: var(--green-pale);
+            border: 2px solid var(--green-main);
+            border-radius: 20px;
+            padding: 6px 14px;
+            cursor: pointer;
+            font-family: inherit;
+            font-weight: 700;
+            color: var(--green-dark);
+            transition: transform 0.15s ease;
+        }
+
+        .ms-dubu-reset:hover {
+            transform: scale(1.04);
+        }
+
+        .ms-dubu-reset img {
+            width: 38px;
+            height: 38px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 2px solid var(--green-main);
+        }
+
+        /* 컨트롤 버튼 줄 */
+        .ms-controls {
+            display: flex;
+            justify-content: center;
+            gap: 8px;
+            flex-wrap: wrap;
+            margin-bottom: 14px;
+        }
+
+        /* 지뢰찾기 보드판 (배경에 두부 사진이 깔려 있어 칸을 열면 두부 사진이 나타남!) */
+        .ms-board-wrapper {
+            position: relative;
+            width: 100%;
+            max-width: 360px;
+            aspect-ratio: 1 / 1;
+            margin: 0 auto 14px;
+            border-radius: 22px;
+            overflow: hidden;
+            border: 4px solid var(--green-main);
+            box-shadow: 0 6px 18px var(--shadow-color);
+            background-image: url('dubu.jpg');
+            background-size: cover;
+            background-position: center;
+        }
+
+        .ms-grid {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            grid-template-rows: repeat(5, 1fr);
+            width: 100%;
+            height: 100%;
+            gap: 3px;
+            padding: 4px;
+            background-color: rgba(44, 76, 56, 0.25);
+        }
+
+        .ms-cell {
+            background-color: var(--beige-soft);
+            border: 2px solid var(--green-medium);
+            border-radius: 10px;
+            font-size: 1.05rem;
+            font-weight: 800;
+            color: var(--green-dark);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            user-select: none;
+            transition: background-color 0.2s ease, transform 0.1s ease;
+            padding: 0;
+            overflow: hidden;
+        }
+
+        .ms-cell:hover:not(.open) {
+            background-color: var(--green-light);
+        }
+
+        /* 열린 안전한 칸: 반투명하게 변해서 배경의 두부 사진(dubu.jpg)이 비쳐 보임! */
+        .ms-cell.open {
+            background-color: rgba(255, 253, 248, 0.32);
+            border-color: rgba(255, 253, 248, 0.55);
+            color: #2C4C38;
+            text-shadow: 0 0 6px #FFFDF8, 0 0 8px #FFFDF8;
+            cursor: default;
+        }
+
+        /* 게임 클리어 시 두부 사진이 더욱 선명하게 보임 */
+        .ms-grid.cleared .ms-cell.open {
+            background-color: rgba(255, 253, 248, 0.12);
+        }
+
+        /* 지뢰 칸: 귀여운 미니 두부 사진이 쏙 들어감 */
+        .ms-cell.mine-revealed {
+            background-color: var(--green-main);
+            border-color: #FFFDF8;
+            padding: 2px;
+        }
+
+        .ms-cell.mine-revealed img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 8px;
+        }
+
+        .ms-message {
+            text-align: center;
+            background-color: var(--green-pale);
+            border: 1px solid var(--green-medium);
+            border-radius: 16px;
+            padding: 12px;
+            font-weight: 700;
+            color: var(--green-dark);
+            word-break: keep-all;
+        }
+    </style>
+</head>
+<body>
+    <div class="top-bar">
+        <a href="index.html" class="btn btn-soft">⬅️ 목차로 돌아가기</a>
+        <div style="display: flex; gap: 8px;">
+            <a href="3-js.html" class="btn btn-soft">🐩 3-js 페이지</a>
+            <button type="button" class="btn" id="darkModeBtn">🌙 다크모드</button>
+        </div>
+    </div>
+
+    <header>
+        <h1>🐩 두부 사진 지뢰찾기 게임 🐾</h1>
+        <p>안전한 칸을 열어 숨겨진 귀여운 두부 사진을 완성해 보세요!</p>
+    </header>
+
+    <main>
+        <section>
+            <div class="ms-status-bar">
+                <div class="ms-stat" id="mineCountText">💣 숨은 지뢰: 4</div>
+                <button type="button" class="ms-dubu-reset" id="resetGameBtn" title="새 게임 시작">
+                    <img src="dubu.jpg" alt="두부 아이콘">
+                    <span id="dubuFaceStatus">🐩 새로하기</span>
+                </button>
+                <div class="ms-stat" id="safeCountText">🐾 남은 칸: 21</div>
+            </div>
+
+            <div class="ms-controls">
+                <button type="button" class="btn" id="modeToggleBtn">⛏️ 현재: 칸 열기 모드 (클릭시 🚩 깃발 모드로 전환)</button>
+            </div>
+
+            <div class="ms-board-wrapper">
+                <div class="ms-grid" id="msGrid"></div>
+            </div>
+
+            <div class="ms-message" id="msMessage">
+                💡 칸을 열면 배경에 있는 귀여운 <strong>두부 사진</strong>이 조각조각 나타나요! 지뢰(4개)를 피해 모든 칸을 열어보세요.
+            </div>
+        </section>
+    </main>
+
+    <script>
+        // 다크모드 연동
+        const darkModeBtn = document.getElementById('darkModeBtn');
+        if (localStorage.getItem('dubu_dark_mode') === 'dark') {
+            document.body.classList.add('dark-mode');
+            darkModeBtn.textContent = '☀️ 라이트모드';
+        }
+        darkModeBtn.addEventListener('click', () => {
+            document.body.classList.toggle('dark-mode');
+            const isDark = document.body.classList.contains('dark-mode');
+            darkModeBtn.textContent = isDark ? '☀️ 라이트모드' : '🌙 다크모드';
+            localStorage.setItem('dubu_dark_mode', isDark ? 'dark' : 'light');
+        });
+
+        // 간단한 5x5 두부 사진 지뢰찾기 로직
+        const SIZE = 5;
+        const MINES = 4;
+        let board = [];
+        let gameOver = false;
+        let flagMode = false;
+        let flagsPlaced = 0;
+        let openedSafe = 0;
+
+        const gridEl = document.getElementById('msGrid');
+        const mineCountEl = document.getElementById('mineCountText');
+        const safeCountEl = document.getElementById('safeCountText');
+        const faceStatusEl = document.getElementById('dubuFaceStatus');
+        const msgEl = document.getElementById('msMessage');
+        const modeBtn = document.getElementById('modeToggleBtn');
+
+        modeBtn.addEventListener('click', () => {
+            flagMode = !flagMode;
+            modeBtn.textContent = flagMode
+                ? '🚩 현재: 깃발 꽂기 모드 (클릭시 ⛏️ 칸 열기 모드로 전환)'
+                : '⛏️ 현재: 칸 열기 모드 (클릭시 🚩 깃발 모드로 전환)';
+        });
+
+        function initMinesweeper() {
+            board = [];
+            gameOver = false;
+            flagsPlaced = 0;
+            openedSafe = 0;
+            gridEl.classList.remove('cleared');
+            faceStatusEl.textContent = '🐩 새로하기';
+            msgEl.innerHTML = '💡 칸을 열면 배경에 있는 귀여운 <strong>두부 사진</strong>이 조각조각 나타나요! 지뢰(4개)를 피해 모든 칸을 열어보세요.';
+
+            for (let r = 0; r < SIZE; r++) {
+                board[r] = [];
+                for (let c = 0; c < SIZE; c++) {
+                    board[r][c] = { mine: false, open: false, flag: false, count: 0 };
+                }
+            }
+
+            // 지뢰 랜덤 배치
+            let placed = 0;
+            while (placed < MINES) {
+                const r = Math.floor(Math.random() * SIZE);
+                const c = Math.floor(Math.random() * SIZE);
+                if (!board[r][c].mine) {
+                    board[r][c].mine = true;
+                    placed++;
+                }
+            }
+
+            // 주변 지뢰 개수 계산
+            for (let r = 0; r < SIZE; r++) {
+                for (let c = 0; c < SIZE; c++) {
+                    if (board[r][c].mine) continue;
+                    let cnt = 0;
+                    for (let dr = -1; dr <= 1; dr++) {
+                        for (let dc = -1; dc <= 1; dc++) {
+                            const nr = r + dr, nc = c + dc;
+                            if (nr >= 0 && nr < SIZE && nc >= 0 && nc < SIZE && board[nr][nc].mine) {
+                                cnt++;
+                            }
+                        }
+                    }
+                    board[r][c].count = cnt;
+                }
+            }
+
+            renderBoard();
+        }
+
+        function renderBoard() {
+            gridEl.innerHTML = '';
+            mineCountEl.textContent = `💣 숨은 지뢰: ${Math.max(0, MINES - flagsPlaced)}`;
+            safeCountEl.textContent = `🐾 남은 칸: ${SIZE * SIZE - MINES - openedSafe}`;
+
+            for (let r = 0; r < SIZE; r++) {
+                for (let c = 0; c < SIZE; c++) {
+                    const cellData = board[r][c];
+                    const btn = document.createElement('button');
+                    btn.type = 'button';
+                    btn.className = 'ms-cell';
+
+                    if (cellData.open) {
+                        btn.classList.add('open');
+                        if (cellData.mine) {
+                            btn.classList.add('mine-revealed');
+                            btn.innerHTML = `<img src="dubu.jpg" alt="두부 지뢰">`;
+                        } else if (cellData.count > 0) {
+                            btn.textContent = cellData.count;
+                        }
+                    } else if (cellData.flag) {
+                        btn.textContent = '🚩';
+                    }
+
+                    btn.addEventListener('click', () => handleCellClick(r, c));
+                    btn.addEventListener('contextmenu', (e) => {
+                        e.preventDefault();
+                        toggleFlag(r, c);
+                    });
+
+                    gridEl.appendChild(btn);
+                }
+            }
+        }
+
+        function toggleFlag(r, c) {
+            if (gameOver || board[r][c].open) return;
+            board[r][c].flag = !board[r][c].flag;
+            flagsPlaced += board[r][c].flag ? 1 : -1;
+            renderBoard();
+        }
+
+        function openCell(r, c) {
+            if (r < 0 || r >= SIZE || c < 0 || c >= SIZE) return;
+            const cell = board[r][c];
+            if (cell.open || cell.flag) return;
+
+            cell.open = true;
+            if (!cell.mine) {
+                openedSafe++;
+                if (cell.count === 0) {
+                    for (let dr = -1; dr <= 1; dr++) {
+                        for (let dc = -1; dc <= 1; dc++) {
+                            if (dr !== 0 || dc !== 0) openCell(r + dr, c + dc);
+                        }
+                    }
+                }
+            }
+        }
+
+        function handleCellClick(r, c) {
+            if (gameOver) return;
+            if (flagMode) {
+                toggleFlag(r, c);
+                return;
+            }
+            const cell = board[r][c];
+            if (cell.flag || cell.open) return;
+
+            if (cell.mine) {
+                // 모든 지뢰(미니 두부 사진) 공개
+                gameOver = true;
+                for (let i = 0; i < SIZE; i++) {
+                    for (let j = 0; j < SIZE; j++) {
+                        if (board[i][j].mine) board[i][j].open = true;
+                    }
+                }
+                faceStatusEl.textContent = '🐶 다시 도전!';
+                msgEl.innerHTML = '💥 앗! 숨어있던 미니 두부 지뢰를 찾았어요! 상단 <strong>두부 사진 버튼</strong>을 눌러 다시 도전해 보세요 🐩';
+                renderBoard();
+                return;
+            }
+
+            openCell(r, c);
+
+            if (openedSafe === SIZE * SIZE - MINES) {
+                gameOver = true;
+                gridEl.classList.add('cleared');
+                faceStatusEl.textContent = '🎉 성공! 새로하기';
+                msgEl.innerHTML = '🎉 축하합니다! 모든 지뢰를 피해 <strong>귀여운 두부 사진</strong>을 완벽하게 찾아냈어요! 🐩🐾';
+            }
+
+            renderBoard();
+        }
+
+        document.getElementById('resetGameBtn').addEventListener('click', initMinesweeper);
+        initMinesweeper();
+    </script>
+</body>
+</html>

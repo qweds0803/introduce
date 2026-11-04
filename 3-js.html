@@ -662,6 +662,131 @@
             display: block;
         }
 
+        /* 두부 사진 지뢰찾기 스타일 */
+        .ms-status-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background-color: var(--beige-soft);
+            border: 2px solid var(--beige-border);
+            border-radius: 20px;
+            padding: 12px 14px;
+            margin-bottom: 12px;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+
+        .ms-stat {
+            background-color: var(--beige-card);
+            border: 1px solid var(--green-medium);
+            padding: 6px 12px;
+            border-radius: 14px;
+            font-weight: 700;
+            font-size: 0.9rem;
+            color: var(--green-dark);
+        }
+
+        .ms-dubu-reset {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            background-color: var(--green-pale);
+            border: 2px solid var(--green-main);
+            border-radius: 20px;
+            padding: 5px 12px;
+            cursor: pointer;
+            font-family: inherit;
+            font-weight: 700;
+            color: var(--green-dark);
+            transition: transform 0.15s ease;
+        }
+
+        .ms-dubu-reset:hover {
+            transform: scale(1.04);
+        }
+
+        .ms-dubu-reset img {
+            width: 34px;
+            height: 34px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 2px solid var(--green-main);
+            margin: 0;
+        }
+
+        .ms-board-wrapper {
+            position: relative;
+            width: 100%;
+            max-width: 340px;
+            aspect-ratio: 1 / 1;
+            margin: 12px auto;
+            border-radius: 22px;
+            overflow: hidden;
+            border: 4px solid var(--green-main);
+            box-shadow: 0 6px 18px var(--shadow-color);
+            background-image: url('dubu.jpg');
+            background-size: cover;
+            background-position: center;
+        }
+
+        .ms-grid {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            grid-template-rows: repeat(5, 1fr);
+            width: 100%;
+            height: 100%;
+            gap: 3px;
+            padding: 4px;
+            background-color: rgba(44, 76, 56, 0.25);
+        }
+
+        .ms-cell {
+            background-color: var(--beige-soft);
+            border: 2px solid var(--green-medium);
+            border-radius: 10px;
+            font-size: 1.05rem;
+            font-weight: 800;
+            color: var(--green-dark);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            user-select: none;
+            padding: 0;
+            overflow: hidden;
+        }
+
+        .ms-cell:hover:not(.open) {
+            background-color: var(--green-light);
+        }
+
+        .ms-cell.open {
+            background-color: rgba(255, 253, 248, 0.32);
+            border-color: rgba(255, 253, 248, 0.55);
+            color: #2C4C38;
+            text-shadow: 0 0 6px #FFFDF8, 0 0 8px #FFFDF8;
+            cursor: default;
+        }
+
+        .ms-grid.cleared .ms-cell.open {
+            background-color: rgba(255, 253, 248, 0.12);
+        }
+
+        .ms-cell.mine-revealed {
+            background-color: var(--green-main);
+            border-color: #FFFDF8;
+            padding: 2px;
+        }
+
+        .ms-cell.mine-revealed img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 8px;
+            margin: 0;
+            border: none;
+        }
+
         /* 하단 푸터 둥근 카드 */
         footer {
             background-color: var(--beige-soft);
@@ -913,6 +1038,35 @@
                 <input type="text" id="dmInput" class="input-field" placeholder="두부에게 말을 걸어보세요! (예: 산책 갈래?, 간식 줄까?)" style="margin-bottom: 0;">
                 <button type="button" class="btn" id="dmSendBtn" style="flex-shrink: 0;">🐩 전송</button>
             </div>
+        </section>
+
+        <hr>
+
+        <!-- 3. 두부 사진 지뢰찾기 미니게임 -->
+        <section id="minesweeperSection">
+            <h2>두부 사진 지뢰찾기 게임</h2>
+            <div class="ms-status-bar">
+                <div class="ms-stat" id="mineCountText">💣 숨은 지뢰: 4</div>
+                <button type="button" class="ms-dubu-reset" id="resetGameBtn" title="새 게임 시작">
+                    <img src="dubu.jpg" alt="두부 아이콘">
+                    <span id="dubuFaceStatus">🐩 새로하기</span>
+                </button>
+                <div class="ms-stat" id="safeCountText">🐾 남은 칸: 21</div>
+            </div>
+
+            <div style="text-align: center; margin-bottom: 10px;">
+                <button type="button" class="btn btn-soft" id="modeToggleBtn" style="width: 100%;">
+                    ⛏️ 현재: 칸 열기 모드 (클릭시 🚩 깃발 모드로 전환)
+                </button>
+            </div>
+
+            <div class="ms-board-wrapper">
+                <div class="ms-grid" id="msGrid"></div>
+            </div>
+
+            <p id="msMessage" style="margin-top: 10px; font-size: 0.92rem; text-align: center;">
+                칸을 열면 배경에 숨겨진 귀여운 <strong>두부 사진</strong>이 나타나요! 지뢰(4개)를 피해 모든 칸을 열어보세요.
+            </p>
         </section>
     </main>
 
@@ -1341,6 +1495,175 @@
                 }
             });
         });
+
+        /* ==========================================
+           11. 두부 사진 지뢰찾기 미니게임 (5x5, 지뢰 4개)
+           ========================================== */
+        const MS_SIZE = 5;
+        const MS_MINES = 4;
+        let msBoard = [];
+        let msGameOver = false;
+        let msFlagMode = false;
+        let msFlagsPlaced = 0;
+        let msOpenedSafe = 0;
+
+        const msGridEl = document.getElementById('msGrid');
+        const msMineCountEl = document.getElementById('mineCountText');
+        const msSafeCountEl = document.getElementById('safeCountText');
+        const msFaceStatusEl = document.getElementById('dubuFaceStatus');
+        const msMsgEl = document.getElementById('msMessage');
+        const msModeBtn = document.getElementById('modeToggleBtn');
+
+        msModeBtn.addEventListener('click', () => {
+            msFlagMode = !msFlagMode;
+            msModeBtn.textContent = msFlagMode
+                ? '🚩 현재: 깃발 꽂기 모드 (클릭시 ⛏️ 칸 열기 모드로 전환)'
+                : '⛏️ 현재: 칸 열기 모드 (클릭시 🚩 깃발 모드로 전환)';
+        });
+
+        function initDubuMinesweeper() {
+            msBoard = [];
+            msGameOver = false;
+            msFlagsPlaced = 0;
+            msOpenedSafe = 0;
+            msGridEl.classList.remove('cleared');
+            msFaceStatusEl.textContent = '🐩 새로하기';
+            msMsgEl.innerHTML = '칸을 열면 배경에 숨겨진 귀여운 <strong>두부 사진</strong>이 나타나요! 지뢰(4개)를 피해 모든 칸을 열어보세요.';
+
+            for (let r = 0; r < MS_SIZE; r++) {
+                msBoard[r] = [];
+                for (let c = 0; c < MS_SIZE; c++) {
+                    msBoard[r][c] = { mine: false, open: false, flag: false, count: 0 };
+                }
+            }
+
+            let placed = 0;
+            while (placed < MS_MINES) {
+                const r = Math.floor(Math.random() * MS_SIZE);
+                const c = Math.floor(Math.random() * MS_SIZE);
+                if (!msBoard[r][c].mine) {
+                    msBoard[r][c].mine = true;
+                    placed++;
+                }
+            }
+
+            for (let r = 0; r < MS_SIZE; r++) {
+                for (let c = 0; c < MS_SIZE; c++) {
+                    if (msBoard[r][c].mine) continue;
+                    let cnt = 0;
+                    for (let dr = -1; dr <= 1; dr++) {
+                        for (let dc = -1; dc <= 1; dc++) {
+                            const nr = r + dr, nc = c + dc;
+                            if (nr >= 0 && nr < MS_SIZE && nc >= 0 && nc < MS_SIZE && msBoard[nr][nc].mine) {
+                                cnt++;
+                            }
+                        }
+                    }
+                    msBoard[r][c].count = cnt;
+                }
+            }
+
+            renderDubuMinesweeper();
+        }
+
+        function renderDubuMinesweeper() {
+            msGridEl.innerHTML = '';
+            msMineCountEl.textContent = `💣 숨은 지뢰: ${Math.max(0, MS_MINES - msFlagsPlaced)}`;
+            msSafeCountEl.textContent = `🐾 남은 칸: ${MS_SIZE * MS_SIZE - MS_MINES - msOpenedSafe}`;
+
+            for (let r = 0; r < MS_SIZE; r++) {
+                for (let c = 0; c < MS_SIZE; c++) {
+                    const cell = msBoard[r][c];
+                    const btn = document.createElement('button');
+                    btn.type = 'button';
+                    btn.className = 'ms-cell';
+
+                    if (cell.open) {
+                        btn.classList.add('open');
+                        if (cell.mine) {
+                            btn.classList.add('mine-revealed');
+                            btn.innerHTML = `<img src="dubu.jpg" alt="두부 지뢰">`;
+                        } else if (cell.count > 0) {
+                            btn.textContent = cell.count;
+                        }
+                    } else if (cell.flag) {
+                        btn.textContent = '🚩';
+                    }
+
+                    btn.addEventListener('click', () => handleMsClick(r, c));
+                    btn.addEventListener('contextmenu', (e) => {
+                        e.preventDefault();
+                        toggleMsFlag(r, c);
+                    });
+
+                    msGridEl.appendChild(btn);
+                }
+            }
+        }
+
+        function toggleMsFlag(r, c) {
+            if (msGameOver || msBoard[r][c].open) return;
+            msBoard[r][c].flag = !msBoard[r][c].flag;
+            msFlagsPlaced += msBoard[r][c].flag ? 1 : -1;
+            renderDubuMinesweeper();
+        }
+
+        function openMsCell(r, c) {
+            if (r < 0 || r >= MS_SIZE || c < 0 || c >= MS_SIZE) return;
+            const cell = msBoard[r][c];
+            if (cell.open || cell.flag) return;
+
+            cell.open = true;
+            if (!cell.mine) {
+                msOpenedSafe++;
+                if (cell.count === 0) {
+                    for (let dr = -1; dr <= 1; dr++) {
+                        for (let dc = -1; dc <= 1; dc++) {
+                            if (dr !== 0 || dc !== 0) openMsCell(r + dr, c + dc);
+                        }
+                    }
+                }
+            }
+        }
+
+        function handleMsClick(r, c) {
+            if (msGameOver) return;
+            if (msFlagMode) {
+                toggleMsFlag(r, c);
+                return;
+            }
+            const cell = msBoard[r][c];
+            if (cell.flag || cell.open) return;
+
+            if (cell.mine) {
+                msGameOver = true;
+                for (let i = 0; i < MS_SIZE; i++) {
+                    for (let j = 0; j < MS_SIZE; j++) {
+                        if (msBoard[i][j].mine) msBoard[i][j].open = true;
+                    }
+                }
+                msFaceStatusEl.textContent = '🐶 다시 도전!';
+                msMsgEl.innerHTML = '💥 앗! 숨어있던 미니 두부 지뢰를 밟았어요! 상단 <strong>두부 사진 버튼</strong>을 눌러 다시 해보세요!';
+                renderDubuMinesweeper();
+                playGentlePoodleBark40dB();
+                return;
+            }
+
+            openMsCell(r, c);
+
+            if (msOpenedSafe === MS_SIZE * MS_SIZE - MS_MINES) {
+                msGameOver = true;
+                msGridEl.classList.add('cleared');
+                msFaceStatusEl.textContent = '🎉 성공!';
+                msMsgEl.innerHTML = '🎉 성공! 모든 지뢰를 피해 <strong>귀여운 두부 사진</strong>을 완성했어요! 🐩🐾';
+                playGentlePoodleBark40dB();
+            }
+
+            renderDubuMinesweeper();
+        }
+
+        document.getElementById('resetGameBtn').addEventListener('click', initDubuMinesweeper);
+        initDubuMinesweeper();
     </script>
 </body>
 </html>
